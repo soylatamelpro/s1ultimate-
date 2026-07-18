@@ -2461,7 +2461,6 @@ Sonic_LoadGfx:
 ; ---------------------------------------------------------------------------
 ; Temporary equates until we add the proper Spin Dash sprites and SFX.
 ; This stuff will be removed later in the tutorial.
-id_SpinDash:	equ id_Roll	; use roll animation for now
 sfx_SpinDash:	equ sfx_Roll	; use roll SFX for now	
 ; ---------------------------------------------------------------------------
 

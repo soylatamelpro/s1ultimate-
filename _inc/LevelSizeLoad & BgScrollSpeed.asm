@@ -123,6 +123,13 @@ LevSz_StartLoc:
 ; ---------------------------------------------------------------------------
 
 ; SetScreen: LevSz_SkipStartPos:
+		clr.w	(v_trackpos).w	; reset Sonic's position tracking index 
+		lea	(v_tracksonic).w,a2 ; load the tracking array into a2 
+		moveq	#64-1,d2	; begin a 64-step loop
+	.looppoint: 
+		move.w	d1,(a2)+	; fill in X 
+		move.w	d0,(a2)+	; fill in Y 
+		dbf	d2,.looppoint	; loop
 LevSz_InitCameraPositions:
 	; --- Camera X-Position ---
 	.chkXLeft:

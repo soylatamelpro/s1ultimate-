@@ -467,6 +467,10 @@ Sonic_LookUp:
 		btst	#bitUp,(v_jpadhold2).w			; is up being held?
 		beq.s	Sonic_Duck				; if not, check for ducking instead
 		move.b	#id_LookUp,obAnim(a0)			; use "looking up" animation
+		addq.b	#1,(v_cam_y_delay).w			; add 1 to camera Y delay
+		cmpi.b	#120,(v_cam_y_delay).w			; did we reach target wait time of 120 frames (2 seconds)?
+		blo.s	Sonic_ResetScr_Part2			; if not, branch
+		move.b	#120,(v_cam_y_delay).w			; cap wait time
 		cmpi.w	#$C8,(v_lookshift).w			; has camera already fully moved up?
 		beq.s	Sonic_CheckDpadLetGo			; if yes, don't move it up further
 		addq.w	#2,(v_lookshift).w			; move camera up further
@@ -478,6 +482,10 @@ Sonic_Duck:
 		btst	#bitDn,(v_jpadhold2).w			; is down being held?
 		beq.s	Sonic_ResetScr				; if not, branch
 		move.b	#id_Duck,obAnim(a0)			; use "ducking" animation
+		addq.b	#1,(v_cam_y_delay).w			; add 1 to camera Y delay
+		cmpi.b	#120,(v_cam_y_delay).w			; did we reach target wait time of 120 frames (2 seconds)?
+		blo.s	Sonic_ResetScr_Part2			; if not, branch
+		move.b	#120,(v_cam_y_delay).w			; cap wait time
 		cmpi.w	#8,(v_lookshift).w			; has camera already fully moved down?
 		beq.s	Sonic_CheckDpadLetGo			; if yes, branch
 		subq.w	#2,(v_lookshift).w			; move camera down further
@@ -485,7 +493,9 @@ Sonic_Duck:
 ; ===========================================================================
 
 ; Obj01_ResetScr:
-Sonic_ResetScr:
+Sonic_ResetScr:		clr.b	(v_cam_y_delay).w			; reset camera Y delay timer
+
+Sonic_ResetScr_Part2:
 		cmpi.w	#$60,(v_lookshift).w			; is screen in its default position?
 		beq.s	Sonic_CheckDpadLetGo			; if yes, branch
 		bcc.s	.resetdown				; does camera need to go back down? if yes, branch
@@ -828,6 +838,16 @@ Sonic_RollSlowdownDone:
 
 ; loc_131CC:
 Sonic_AngledRollSpeed:
+ 		cmpi.w	#$60,(v_lookshift).w			; is vertical camera shift already at base value?
+		beq.s	.y_cam_reset_end			; if yes, branch
+		bhs.s	.y_cam_pull_up				; is camera offset downwards? if yes, branch
+		addq.w	#2,(v_lookshift).w			; pull camera back down
+		bra.s	.y_cam_reset_end			; branch over
+
+	.y_cam_pull_up:
+		subq.w	#2,(v_lookshift).w			; pull camera back up
+
+	.y_cam_reset_end:
 	if FixBugs
 		; Sonic 1 does not reset the camera to its default position when
 		; rolling. This oversight was corrected in Sonic 2.

@@ -327,6 +327,7 @@ Sonic_MdNormal:	; While Sonic is on the ground and not rolling
 
 ; Obj01_MdJump:
 Sonic_MdJump:	; While Sonic is in the air but not rolling
+		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		bsr.w	Sonic_JumpHeight			; handle Sonic's jump height based on whether the jump button is still held
 		bsr.w	Sonic_JumpDirection			; handle midair direction adjustments while jumping
 		bsr.w	Sonic_LevelBound			; make sure Sonic stays within level bounds and handle bottomless pits
@@ -356,6 +357,7 @@ Sonic_MdRoll:	; While Sonic is on the ground and rolling
 
 ; Obj01_MdJump2:
 Sonic_MdJump2:	; While Sonic is in the air and rolling (usually, but not limited to, jumping)
+		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		bsr.w	Sonic_JumpHeight			; handle Sonic's jump height based on whether the jump button is still held
 		bsr.w	Sonic_JumpDirection			; handle midair direction adjustments while jumping
 		bsr.w	Sonic_LevelBound			; make sure Sonic stays within level bounds and handle bottomless pits

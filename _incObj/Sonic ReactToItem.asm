@@ -405,6 +405,7 @@ HurtSonic:
 		neg.w	obVelX(a0)				; if Sonic is right of the object, reverse
 
 	.setDamageState:
+		bclr	#0,spindash_flag(a0)	; clear Spin Dash flag 
 		move.w	#0,obInertia(a0)			; cancel ground speed
 		move.b	#id_Hurt,obAnim(a0)			; set Sonic to hurt animation
 		move.w	#2*60,flashtime(a0)			; set temporary invulnerability time to 2 seconds

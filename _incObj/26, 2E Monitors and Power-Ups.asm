@@ -106,7 +106,7 @@ Mon_Solid:	; Routine 2
 		cmpi.b	#id_Roll,obAnim(a1)		; is Sonic rolling?
 		beq.s	.checkpush			; if yes, branch
 		tst.b	spindash_flag(a1)		; is spindash flag set?
-		bne.s	loc_A25C			; if yes, branch
+		bne.s   .dontbreak			; if yes, branch
 ; loc_A20A:
 .dontbreak:
 		tst.w	d1				; has Sonic touched the monitor from the sides?

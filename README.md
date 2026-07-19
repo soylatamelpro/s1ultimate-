@@ -1,4 +1,4 @@
-# Sonic the Hedgehog W/ Spindash (ON THE WORKS)
+# Sonic the Hedgehog W/ Spindash (INDEFINIED RETIREMENT)
 
 *A sonic hack that adds spindash, removes speed cap and roll jump lock (data select wil be added in the future!)*
 

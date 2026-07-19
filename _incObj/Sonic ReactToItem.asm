@@ -250,7 +250,7 @@ React_Enemy:
 		tst.b	(v_invinc).w				; is Sonic invincible?
 		bne.s	.checkBossHit				; if yes, branch
 		cmpi.b	#id_SpinDash,obAnim(a0)			; is Sonic Spin Dashing? 
-		beq.s	.donthurtsonic				; if yes, branch
+		bne.w   React_ChkHurt				; if not, damage sonic
 		cmpi.b	#id_Roll,obAnim(a0)			; is Sonic rolling/jumping?
 		bne.w	React_ChkHurt				; if not, damage Sonic
 
@@ -407,7 +407,7 @@ HurtSonic:
 		neg.w	obVelX(a0)				; if Sonic is right of the object, reverse
 
 	.setDamageState:
-		bclr	#0,spindash_flag(a0)	; clear Spin Dash flag 
+		bclr	#0,spindash_flag(a0)			; clear Spin Dash flag 
 		move.w	#0,obInertia(a0)			; cancel ground speed
 		move.b	#id_Hurt,obAnim(a0)			; set Sonic to hurt animation
 		move.w	#2*60,flashtime(a0)			; set temporary invulnerability time to 2 seconds
